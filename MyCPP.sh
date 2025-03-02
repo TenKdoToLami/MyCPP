@@ -110,4 +110,4 @@ TimeRunCPP() {
     fi
 }
 
-export -f MakeCPP RunCPP ListCPP MakeRunCPP TimeRunCPP MyCPP uMyCPP uMyCPP.sh
+export -f MakeCPP RunCPP ListCPP MakeRunCPP TimeRunCPP MyCPP uMyCPP uMyCPPsh
