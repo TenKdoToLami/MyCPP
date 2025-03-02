@@ -11,6 +11,8 @@ uMyCPPsh() {
 
 MyCPP() {
     echo -e "\e[34mAvailable MyCPP Commands:\e[0m"
+    echo -e "\e[32muMyCPP\e[0m                  - Opens man page in gedit for adjusting"
+    echo -e "\e[32muMyCPPsh\e[0m                - Opens script in gedit for adjusting"
     echo -e "\e[32mMakeCPP <file.cpp> [f|g]\e[0m  - Compile C++ file (-f for sanitization, -g for debugging)"
     echo -e "\e[32mRunCPP [valgrind]\e[0m        - Run last compiled program (valgrind requires -g)"
     echo -e "\e[32mMakeRunCPP <file.cpp> [f|g] [valgrind]\e[0m - Compile and run in one step"
