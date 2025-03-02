@@ -1,0 +1,79 @@
+.TH MYCPP 1 "March 2025" "Version 1.0" "Custom C++ Compilation and Execution"
+
+.SH NAME
+MyCPP \- A set of custom Bash functions to compile, run, and manage C++ programs
+
+.SH SYNOPSIS
+.B MyCPP
+
+.B uMyCPP
+
+.B uMyCPPsh
+
+.B MakeCPP
+.IR "\t" source_file.cpp " [" f | g ]
+
+.B RunCPP
+.IR "\t " "["valgrind "]"
+
+.B MakeRunCPP
+.IR "  "source_file.cpp " [" f | g ] " " "["valgrind "]"
+
+.B TimeRunCPP
+
+.B ListCPP
+
+.SH DESCRIPTION
+MyCPP provides a set of Bash functions to streamline C++ compilation and execution. Note all the programs need to be compiled using the MakeCPP or any other subfunction using it, since the variables are stored in the bash session.
+
+.TP
+.B MyCPP
+List all the MyCPP functions with short descriptions
+
+.TP
+.B uMyCPP
+Opens MyCPP man pages in gedit for adjustments.
+
+.TP
+.B uMyCPPsh
+Opens MyCPP.sh scripts in gedit for adjustments.
+
+.TP
+.B MakeCPP <source_file.cpp> [f|g]
+Compiles a C++ file with standard warnings and optimizations.
+Optional flags f|g. \fIf\fR enables address sanitization. \fIg\fR enables debugging symbols.\n
+
+.TP
+.B RunCPP [valgrind]
+Runs the last compiled C++ program. If \fIvalgrind\fR is specified, the program must have been compiled with \fBMakeCPP\fR using \fIg\fR.
+
+.TP
+.B MakeRunCPP <source_file.cpp> [f|g]  [valgrind]
+Compiles and immediately runs the program.
+
+.TP
+.B TimeRunCPP
+Executes the last compiled program and prints only the execution time.
+
+.TP
+.B ListCPP
+Lists all C++ source files and compiled executables in the current directory.
+
+.SH EXAMPLES
+Compile and run a C++ program:
+.EX
+$ MakeCPP my_program.cpp
+$ RunCPP
+.EE
+
+Compile with debugging symbols and check memory leaks:
+.EX
+$ MakeCPP my_program.cpp g
+$ RunCPP valgrind
+.EE
+
+.SH AUTHOR
+Written by Barty.
+
+.SH SEE ALSO
+g++, valgrind, time
