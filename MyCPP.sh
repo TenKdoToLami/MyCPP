@@ -11,13 +11,13 @@ uMyCPPsh() {
 
 MyCPP() {
     echo -e "\e[34mAvailable MyCPP Commands:\e[0m"
-    echo -e "\e[32muMyCPP\e[0m                  - Opens man page in gedit for adjusting"
-    echo -e "\e[32muMyCPPsh\e[0m                - Opens script in gedit for adjusting"
-    echo -e "\e[32mMakeCPP <file.cpp> [f|g]\e[0m  - Compile C++ file (-f for sanitization, -g for debugging)"
+    echo -e "\e[32muMyCPP\e[0m                   - Opens man page in gedit for adjusting"
+    echo -e "\e[32muMyCPPsh\e[0m                 - Opens script in gedit for adjusting"
+    echo -e "\e[32mMakeCPP <file.cpp> [f|g]\e[0m - Compile C++ file (-f for sanitization, -g for debugging)"
     echo -e "\e[32mRunCPP [valgrind]\e[0m        - Run last compiled program (valgrind requires -g)"
     echo -e "\e[32mMakeRunCPP <file.cpp> [f|g] [valgrind]\e[0m - Compile and run in one step"
-    echo -e "\e[32mTimeRunCPP\e[0m              - Run last compiled program and print execution time"
-    echo -e "\e[32mListCPP\e[0m                 - List all .cpp files and compiled executables"
+    echo -e "\e[32mTimeRunCPP\e[0m               - Run last compiled program and print execution time"
+    echo -e "\e[32mListCPP\e[0m                  - List all .cpp files and compiled executables"
 }
 
 
@@ -80,10 +80,19 @@ RunCPP() {
                 return 1
             fi
             echo -e "\e[33mRunning with Valgrind: $LAST_COMPILED_CPP\e[0m"
-            valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./"$LAST_COMPILED_CPP"
+            valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./"$LAST_COMPILED_CPP"  # No redirection
         else
             echo -e "\e[32mRunning: $LAST_COMPILED_CPP\e[0m"
-            ./"$LAST_COMPILED_CPP"
+            # Run the compiled program without suppressing segfault message
+            ./"$LAST_COMPILED_CPP"  # No redirection
+            exit_code=$?  # Capture the exit code of the program
+            
+            # Check if the program crashed (segfault or other errors)
+            if [ $exit_code -eq 139 ]; then
+                echo -e "\e[31mSegmentation fault (core dumped)\e[0m"
+            fi
+
+            return $exit_code  # Return the program's exit code
         fi
         return $?
     else
@@ -91,6 +100,11 @@ RunCPP() {
         return 1
     fi
 }
+
+
+
+
+
 
 ListCPP() {
     echo -e "\e[36mC++ Source Files:\e[0m"
