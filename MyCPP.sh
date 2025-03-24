@@ -72,29 +72,25 @@ MakeCPP() {
     fi
 }
 
-RunCPP() {
+RunCPP()
+{
     if [ -n "$LAST_COMPILED_CPP" ] && [ -f "$LAST_COMPILED_CPP" ]; then
-        if [ "$1" = "valgrind" ]; then  
+        if [ "$1" = "valgrind" ]; then
             if [ "$LAST_COMPILED_WITH_G" -eq 0 ]; then
                 echo -e "\e[31mError: Valgrind requires the program to be compiled with -g (debugging symbols).\e[0m"
                 return 1
             fi
             echo -e "\e[33mRunning with Valgrind: $LAST_COMPILED_CPP\e[0m"
-            valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./"$LAST_COMPILED_CPP"  # No redirection
+            valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./"$LAST_COMPILED_CPP"
         else
             echo -e "\e[32mRunning: $LAST_COMPILED_CPP\e[0m"
-            # Run the compiled program without suppressing segfault message
-            ./"$LAST_COMPILED_CPP"  # No redirection
-            exit_code=$?  # Capture the exit code of the program
-            
-            # Check if the program crashed (segfault or other errors)
-            if [ $exit_code -eq 139 ]; then
-                echo -e "\e[31mSegmentation fault (core dumped)\e[0m"
+            ./"$LAST_COMPILED_CPP"
+            exitCode=$?
+            if [ $exitCode -eq 139 ]; then
+                echo -e "\e[31mSegmentation fault detected (exit code 139)\e[0m"
             fi
-
-            return $exit_code  # Return the program's exit code
+            return $exitCode
         fi
-        return $?
     else
         echo -e "\e[31mError: No compiled file found. Compile a file first.\e[0m"
         return 1
@@ -105,11 +101,10 @@ RunCPP() {
 
 
 
-
 ListCPP() {
     echo -e "\e[36mC++ Source Files:\e[0m"
     ls *.cpp 2>/dev/null || echo "No C++ source files found."
-    
+
     echo -e "\e[36mCompiled Executables:\e[0m"
     ls *.out 2>/dev/null || echo "No compiled executables found."
 }
